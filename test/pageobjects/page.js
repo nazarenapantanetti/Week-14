@@ -36,20 +36,20 @@ class Page {
         return $("#add-to-cart-sauce-labs-backpack");
     }
 
-    get bikeImage () {
-        return $('#item_0_img_link > img');
+    get twitterIcon () {
+        return $('#page_wrapper > footer > ul > li.social_twitter > a');
     }
 
-    get bikeName () {
-        return $('#item_0_title_link > div');
+    get facebookIcon () {
+        return $('#page_wrapper > footer > ul > li.social_facebook > a');
     }
 
-    get bikeDescription () {
-        return $('#inventory_container > div > div:nth-child(2) > div.inventory_item_description > div.inventory_item_label > div');
+    get linkedinIcon () {
+        return $('#page_wrapper > footer > ul > li.social_linkedin > a');
     }
    
-    get bikePrice () {
-        return $("#inventory_container > div > div:nth-child(2) > div.inventory_item_description > div.pricebar > div");
+    get copyright () {
+        return $("#page_wrapper > footer > div");
     }
 
     get bikeAddToCartBtn () {
@@ -91,5 +91,21 @@ class Page {
         });
     };
     
+    async render () {
+        await Promise.all([
+            this.burgerMenu.waitForDisplayed(),
+            this.mainPageTitle.waitForDisplayed(),
+            this.cartIcon.waitForDisplayed(),
+            this.backpackImage.waitForDisplayed(),
+            this.backpackName.waitForDisplayed(),
+            this.backpackDescription.waitForDisplayed(),
+            this.backpackPrice.waitForDisplayed(),
+            this.backpackAddToCartBtn.waitForDisplayed(),
+            this.twitterIcon.waitForDisplayed(),
+            this.facebookIcon.waitForDisplayed(),
+            this.linkedinIcon.waitForDisplayed(),
+            this.copyright.waitForDisplayed(),
+        ]);
+    }
 }
 export default new Page();

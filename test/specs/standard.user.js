@@ -1,9 +1,8 @@
-
 import LoginPage from "../pageobjects/login.page";
 import Page from "../pageobjects/page";
 import CartPage from "../pageobjects/cart.page";
 import CheckoutPage from "../pageobjects/checkout.page";
-import LogoutPage from "../pageobjects/logout.page"
+import LogoutPage from "../pageobjects/logout.page";
 
 
 describe ("Login standard user", () => {
