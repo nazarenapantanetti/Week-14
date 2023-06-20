@@ -1,6 +1,4 @@
-const Page = require('./page');
-
-class CartPage extends Page {
+class CartPage {
 
     get cartPageTitle () {
         return $('.login_logo')
@@ -17,6 +15,22 @@ class CartPage extends Page {
     get backpackRemoveBtn () {
         return $("#remove-sauce-labs-backpack")
     }
+
+    get bikeRemoveBtn () {
+        return $("#remove-sauce-labs-bike-light")
+    }
+
+    async removeBikeItem () {
+        await this.bikeRemoveBtn.click();
+    }
+
+    async continueShopping () {
+        await this.continueShoppingBtn.click();
+    }
+
+    async checkout () {
+        await this.checkoutBtn.click();
+    }
 };
 
-module.exports = new CartPage();
+export default new CartPage();

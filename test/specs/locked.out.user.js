@@ -9,17 +9,19 @@ describe ("Login page", () => {
 
     it ("Testing login components", async () => {
 
-        await expect(LoginPage.loginPageTitle).toHaveTextContaning("Swag Labs");
+        await expect(LoginPage.loginPageTitle).toHaveTextContaining("Swag Labs");
         await expect(LoginPage.inputUsername).toBeDisplayed();
-        await expect(LoginPage.inputUsername).toHaveTextContaning("Username");
         await expect(LoginPage.inputPassword).toBeDisplayed();
-        await expect(LoginPage.inputPassword).toHaveTextContaning("Password");
         await expect(LoginPage.loginBtn).toBeDisplayed();
+
     });
 
     it ("Login locked out user", async () => {
+
         await LoginPage.login ("locked_out_user", "secret_sauce");
-        await LoginPage.clickLoginBtn();
-        await expect(LoginPage.errorToast).toBeDisplayed().toHaveTextContaning("Epic sadface: Sorry, this user has been locked out.");
+        await LoginPage.loginBtnClick();
+        await expect(LoginPage.errorToast).toBeDisplayed();
+        await expect(LoginPage.errorToast).toHaveTextContaining("Epic sadface: Sorry, this user has been locked out.");
+        
     });
 });

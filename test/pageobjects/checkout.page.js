@@ -1,6 +1,5 @@
-const Page = require('./page');
 
-class CheckoutPage extends Page {
+class CheckoutPage {
 
     get inputFirstname () {
         return $('#first-name');
@@ -11,7 +10,7 @@ class CheckoutPage extends Page {
     }
 
     get inputPostalCode () {
-        return $("postal-code");
+        return $("#postal-code");
     }
 
     get cancelBtn () {
@@ -27,13 +26,38 @@ class CheckoutPage extends Page {
     }
 
     get finalMessage () {
-        return $("complete-header");
+        return $("#checkout_complete_container > h2");
     }
 
     get backHomeBtn () {
-        return $("back-to-products");
+        return $("#back-to-products");
     }
+
+    async firstnameForm (firstname) {
+        await this.inputFirstname.setValue(firstname);
+    }
+    
+    async lastnameForm (lastname) {
+        await this.inputLastname.setValue(lastname);
+    }
+
+    async postalCodeForm (postalcode) {
+        await this.inputPostalCode.setValue(postalcode);
+    }
+
+    async continueCheckout () {
+        await this.continueBtn.click();
+    }
+
+    async finishBuy () {
+        await this.finishBtn.click();
+    }
+
+    async backToHome () {
+        await this.backHomeBtn.click();
+    }
+
 };
 
 
-module.exports = new CheckoutPage();
+export default new CheckoutPage();

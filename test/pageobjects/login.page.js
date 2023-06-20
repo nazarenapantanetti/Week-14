@@ -1,8 +1,4 @@
-
-
-const Page = require('./page');
-
-class LoginPage extends Page {
+class LoginPage {
 
     get loginPageTitle () {
         return $('.login_logo')
@@ -21,11 +17,11 @@ class LoginPage extends Page {
     }
 
     get errorToast () {
-        return $(".h3");
+        return $("#login_button_container > div > form > div.error-message-container.error > h3");
     }
 
     async loginBtnClick () {
-        await this.btnLogin.click();
+        await this.loginBtn.click();
     }
 
     async login (username, password) {
@@ -34,4 +30,4 @@ class LoginPage extends Page {
     }
 }
 
-module.exports = new LoginPage();
+export default new LoginPage();
