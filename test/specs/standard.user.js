@@ -6,6 +6,7 @@ import LogoutPage from "../pageobjects/logout.page";
 
 
 describe ("Login standard user", () => {
+
     beforeAll("Open browser", () => {
         browser.setWindowSize(1366,768);
         browser.url("https://www.saucedemo.com/");
@@ -85,9 +86,42 @@ describe ("Shopping flow", () => {
         await CheckoutPage.backToHome();
     });
 
-    it ("Logout", async () => {
-        await Page.burgerMenuClick();
-        await LogoutPage.logout();  
+});
+
+describe("Order items by price", ()=> {
+    
+    it ("From highest to lowest", async () => {
+        await browser.pause(2000);
+        await Page.visualizeProductOrderOptions();
+        await Page.selectHighToLowPriceOption();
+        await expect(Page.productsList).toEqual(Page.orderPricesDescending);
     });
 
 });
+
+describe("Redirection to social networks", () => {
+
+    it ("Going to Twitter", async () => {
+            await Page.scrollDown();
+            await Page.goToTwitter();
+    });
+    
+    it ("Going to Facebook", async () => { 
+            await Page.goToFacebook();
+    });
+    
+    it ("Going to LinkedIn", async () => {
+            await Page.goToLinkedin();
+    });
+});
+
+describe("Logout", () => { 
+
+    it ("successfully", async () => {
+        await Page.burgerMenuClick();
+        await LogoutPage.logout();  
+    });
+});
+
+
+

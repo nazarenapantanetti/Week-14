@@ -64,6 +64,22 @@ class Page {
         return $("#remove-sauce-labs-onesie");
     }
 
+    get productSortContainer () {
+        return $("#header_container > div.header_secondary_container > div > span > select");
+    }
+
+    get optionHighToLowPrice () {
+        return $("#header_container > div.header_secondary_container > div > span > select > option:nth-child(4)");
+    }
+
+    get productsList () {
+        return $("#inventory_container > div");
+    }
+
+    get productsPrice () {
+        return$("#inventory_container > div > div:nth-child(1) > div.inventory_item_description > div.pricebar > div");
+    }
+    
     async buyItems () {
         await this.backpackAddToCartBtn.click();
         await this.bikeAddToCartBtn.click();
@@ -107,5 +123,34 @@ class Page {
             this.copyright.waitForDisplayed(),
         ]);
     }
+
+    async visualizeProductOrderOptions () {
+        await this.productSortContainer.click();
+    }
+
+    async selectHighToLowPriceOption () {
+        await this.optionHighToLowPrice.click();
+    }
+
+    async orderPriceDescending () {
+        await this.productsPrice.sort((a, b) => b - a);
+    }
+
+    async goToTwitter () {
+        await this.twitterIcon.click();
+    }
+
+    async goToFacebook () {
+        await this.facebookIcon.click();
+    }
+
+    async goToLinkedin () {
+        await this.linkedinIcon.click();
+    }
+
+    async backToSwagLabs () {
+        await browser.switchToWindow("https://www.saucedemo.com/inventory.html");
+    }
+    
 }
 export default new Page();
