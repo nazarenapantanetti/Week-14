@@ -136,20 +136,28 @@ class Page {
         await this.productsPrice.sort((a, b) => b - a);
     }
 
-    async goToTwitter () {
+    async clickOnTwitterIcon () {
         await this.twitterIcon.click();
     }
 
-    async goToFacebook () {
+    async goToTwitter () {
+        await this.browser.switchWindow('twitter.com/saucelabs');
+    }
+
+    async clickOnFacebookIcon () {
         await this.facebookIcon.click();
     }
 
-    async goToLinkedin () {
+    async clickOnLinkedinIcon () {
         await this.linkedinIcon.click();
     }
 
+    async identifyWindow () {
+        await this.browser.getWindowHandle();
+    }
+
     async backToSwagLabs () {
-        await browser.switchToWindow("https://www.saucedemo.com/inventory.html");
+        await this.browser.switchWindow(this.identifyWindow);
     }
     
 }

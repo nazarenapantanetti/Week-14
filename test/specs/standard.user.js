@@ -5,7 +5,7 @@ import CheckoutPage from "../pageobjects/checkout.page";
 import LogoutPage from "../pageobjects/logout.page";
 
 
-describe ("Login standard user", () => {
+describe ("Standard user", () => {
 
     beforeAll("Open browser", () => {
         browser.setWindowSize(1366,768);
@@ -37,31 +37,28 @@ describe ("Login standard user", () => {
         await LoginPage.loginBtnClick();
         await expect(browser).toHaveUrl("https://www.saucedemo.com/inventory.html");
     });
-  
-});
 
-describe ("Testing page content", () => { 
-
-    it ("components", async () => {
-
-    await expect(Page.mainPageTitle).toExist();
-    await expect(Page.mainPageTitle).toHaveTextContaining("Swag Labs");
-    await expect(Page.burgerMenu).toBeClickable();
-    await expect(Page.cartIcon).toBeDisplayed();
+    it ("Testing page content: components", async () => {
+        await expect(Page.mainPageTitle).toExist();
+        await expect(Page.mainPageTitle).toHaveTextContaining("Swag Labs");
+        await expect(Page.burgerMenu).toBeClickable();
+        await expect(Page.cartIcon).toBeDisplayed();
     });
-
-    it ("Testing for product's information", async () => {
-       
+    
+    it ("Order items by price: From highest to lowest", async () => {
+        await Page.visualizeProductOrderOptions();
+        await Page.selectHighToLowPriceOption();
+        expect(Page.productsList).toEqual(Page.orderPricesDescending);
+    });
+    
+    it ("Testing for product's information", async () => {   
         await expect(Page.backpackImage).toHaveAttribute("src","/static/media/sauce-backpack-1200x1500.0a0b85a3.jpg");
         await expect(Page.backpackName).toBeDisplayed();
         await expect(Page.backpackDescription).toBeDisplayed();
         await expect(Page.backpackPrice).toBeDisplayed();
     });
-});
 
-describe ("Shopping flow", () => { 
-
-    it ("Adding items to the cart", async () => {
+    it ("Shopping flow: Adding items to the cart", async () => {
         await Page.buyItems();
         await Page.goToCart();
         await CartPage.removeBikeItem();
@@ -70,56 +67,53 @@ describe ("Shopping flow", () => {
         await Page.goToCart();
     });
 
-    it ("Start checkout filling form", async () => {
+    it ("Shopping flow: Start checkout filling form", async () => {
         await Page.scrollDown();
+        await expect(CartPage.checkoutBtn).toBeDisplayed();
         await CartPage.checkout();
         await CheckoutPage.firstnameForm("Susana");
         await CheckoutPage.lastnameForm("Gimenez");
         await CheckoutPage.postalCodeForm("2000");
+        await expect(CheckoutPage.continueBtn).toBeDisplayed();
         await CheckoutPage.continueCheckout();
     });
 
-    it ("Complete checkout", async () => {
+    it ("Shopping flow: Complete checkout", async () => {
+        expect(CheckoutPage.finishBtn).toBeDisplayed();
         await CheckoutPage.finishBuy();
         await expect(CheckoutPage.finalMessage).toBeDisplayed();
         expect(CheckoutPage.finalMessage).toHaveTextContaining("Thank you for your order!");
         await CheckoutPage.backToHome();
     });
 
-});
-
-describe("Order items by price", ()=> {
-    
-    it ("From highest to lowest", async () => {
-        await browser.pause(2000);
-        await Page.visualizeProductOrderOptions();
-        await Page.selectHighToLowPriceOption();
-        await expect(Page.productsList).toEqual(Page.orderPricesDescending);
-    });
-
-});
-
-describe("Redirection to social networks", () => {
-
     it ("Going to Twitter", async () => {
-            await Page.scrollDown();
-            await Page.goToTwitter();
+        await Page.scrollDown();
+        await Page.clickOnTwitterIcon();
+        await browser.switchWindow('https://twitter.com/saucelabs');
+        await expect(browser).toHaveUrlContaining("https://twitter.com/saucelabs");
+        await browser.switchWindow('https://www.saucedemo.com/inventory.html');
     });
-    
+
     it ("Going to Facebook", async () => { 
-            await Page.goToFacebook();
+        await Page.scrollDown();
+        await Page.clickOnFacebookIcon();
+        await browser.switchWindow('https://www.facebook.com/saucelabs');
+        await expect(browser).toHaveUrlContaining("https://www.facebook.com/saucelabs");
+        await browser.switchWindow('https://www.saucedemo.com/inventory.html');
     });
-    
+
     it ("Going to LinkedIn", async () => {
-            await Page.goToLinkedin();
+        await Page.scrollDown();
+        await Page.clickOnLinkedinIcon();
+        await browser.switchWindow('https://www.linkedin.com/company/sauce-labs/');
+        await expect(browser).toHaveUrlContaining("https://twitter.com/saucelabs");
+        await browser.switchWindow('https://www.linkedin.com/company/sauce-labs/');
     });
-});
 
-describe("Logout", () => { 
-
-    it ("successfully", async () => {
+    it ("Logout", async () => {  
         await Page.burgerMenuClick();
         await LogoutPage.logout();  
+        await expect(browser).toHaveUrlContaining('https://www.saucedemo.com/');
     });
 });
 
