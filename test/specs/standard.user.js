@@ -48,7 +48,15 @@ describe ("Standard user", () => {
     it ("Order items by price: From highest to lowest", async () => {
         await Page.visualizeProductOrderOptions();
         await Page.selectHighToLowPriceOption();
-        expect(Page.productsList).toEqual(Page.orderPricesDescending);
+        await expect(Page.firstProductList).toBeDisplayed();
+        await expect(Page.firstPriceList).toHaveTextContaining("49.99");
+    });
+
+    it ("Order items by alphabet: From A to Z", async () => {
+        await Page.visualizeProductOrderOptions();
+        await Page.selectAToZOption();
+        await expect(Page.firstProductList).toBeDisplayed();
+        await expect(Page.firstNameList).toHaveTextContaining("Sauce Labs Backpack");
     });
     
     it ("Testing for product's information", async () => {   
@@ -79,10 +87,10 @@ describe ("Standard user", () => {
     });
 
     it ("Shopping flow: Complete checkout", async () => {
-        expect(CheckoutPage.finishBtn).toBeDisplayed();
+        await expect(CheckoutPage.finishBtn).toBeDisplayed();
         await CheckoutPage.finishBuy();
         await expect(CheckoutPage.finalMessage).toBeDisplayed();
-        expect(CheckoutPage.finalMessage).toHaveTextContaining("Thank you for your order!");
+        await expect(CheckoutPage.finalMessage).toHaveTextContaining("Thank you for your order!");
         await CheckoutPage.backToHome();
     });
 
@@ -106,8 +114,8 @@ describe ("Standard user", () => {
         await Page.scrollDown();
         await Page.clickOnLinkedinIcon();
         await browser.switchWindow('https://www.linkedin.com/company/sauce-labs/');
-        await expect(browser).toHaveUrlContaining("https://twitter.com/saucelabs");
-        await browser.switchWindow('https://www.linkedin.com/company/sauce-labs/');
+        await expect(browser).toHaveUrlContaining("https://www.linkedin.com/company/sauce-labs/");
+        await browser.switchWindow('https://www.saucedemo.com/inventory.html');
     });
 
     it ("Logout", async () => {  

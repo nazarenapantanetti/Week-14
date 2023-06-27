@@ -72,12 +72,20 @@ class Page {
         return $("#header_container > div.header_secondary_container > div > span > select > option:nth-child(4)");
     }
 
-    get productsList () {
-        return $("#inventory_container > div");
+    get optionAToZ() {
+        return $("#header_container > div.header_secondary_container > div > span > select > option:nth-child(1)");
     }
 
-    get productsPrice () {
-        return$("#inventory_container > div > div:nth-child(1) > div.inventory_item_description > div.pricebar > div");
+    get firstProductList () {
+        return $ ("#inventory_container > div > div:nth-child(1)");
+    }
+
+    get firstPriceList () {
+        return $ ("#inventory_container > div > div:nth-child(1) > div.inventory_item_description > div.pricebar > div");
+    }
+
+    get firstNameList () {
+        return $ ("#inventory_container > div > div:nth-child(1) > div.inventory_item_description > div.inventory_item_label");
     }
     
     async buyItems () {
@@ -132,10 +140,6 @@ class Page {
         await this.optionHighToLowPrice.click();
     }
 
-    async orderPriceDescending () {
-        await this.productsPrice.sort((a, b) => b - a);
-    }
-
     async clickOnTwitterIcon () {
         await this.twitterIcon.click();
     }
@@ -152,12 +156,8 @@ class Page {
         await this.linkedinIcon.click();
     }
 
-    async identifyWindow () {
-        await this.browser.getWindowHandle();
-    }
-
-    async backToSwagLabs () {
-        await this.browser.switchWindow(this.identifyWindow);
+    async selectAToZOption () {
+        await this.optionAToZ.click();
     }
     
 }
